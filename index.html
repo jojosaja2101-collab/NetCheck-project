@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070a10">
+  <meta name="description" content="NetCheck membantu siswa memeriksa koneksi internet dan menemukan solusi masalah jaringan.">
+  <title>NetCheck — Network Assistant</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <img src="assets/logo.png" alt="Logo NetCheck"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+          <span class="logo-fallback">N</span>
+        </div>
+        <div>
+          <h2>NetCheck</h2>
+          <p>NETWORK ASSISTANT</p>
+        </div>
+        <button class="sidebar-close" id="sidebarClose" aria-label="Tutup menu">×</button>
+      </div>
+
+      <p class="nav-label">MENU UTAMA</p>
+      <nav class="nav-menu" aria-label="Navigasi utama">
+        <button class="nav-link active" data-page="home"><span>▦</span> Dashboard</button>
+        <button class="nav-link" data-page="speed"><span>⌁</span> Tes Kecepatan</button>
+        <button class="nav-link" data-page="analysis"><span>▤</span> Analisis Aplikasi</button>
+        <button class="nav-link" data-page="troubleshoot"><span>⚙</span> Solusi Jaringan</button>
+        <button class="nav-link" data-page="result"><span>◷</span> Hasil Terakhir</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-info">
+          <span class="online-dot"></span>
+          <div><strong>NetCheck aktif</strong><small>Tanpa database</small></div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+          <div>
+            <p class="eyebrow">NETWORK MONITOR</p>
+            <h1 id="pageTitle">Dashboard</h1>
+          </div>
+        </div>
+        <div class="topbar-status"><span class="online-dot"></span> <span id="connectionText">Siap menguji</span></div>
+      </header>
+
+      <div class="content">
+        <!-- DASHBOARD -->
+        <section class="page active" id="page-home">
+          <div class="welcome-banner">
+            <div>
+              <span class="tag">NETWORK DIAGNOSTIC TOOL</span>
+              <h2>Kenali koneksi internetmu.</h2>
+              <p>Periksa kecepatan, pahami kemampuan aplikasi, dan temukan solusi jaringan.</p>
+              <button class="btn btn-primary" data-go="speed">Mulai Tes Kecepatan <span>→</span></button>
+            </div>
+            <div class="banner-art" aria-hidden="true">
+              <div class="signal-circle"><span>⌁</span></div>
+              <i class="signal-line line-one"></i><i class="signal-line line-two"></i>
+            </div>
+          </div>
+
+          <div class="section-heading">
+            <div><h2>Status Koneksi</h2><p>Hasil pengukuran terakhir di sesi ini</p></div>
+            <span class="subtle-chip">LIVE SESSION</span>
+          </div>
+
+          <div class="metrics-grid">
+            <article class="metric-card">
+              <div class="metric-icon cyan">◷</div><p>Ping</p>
+              <div class="metric-value"><span id="homePing">—</span><small>ms</small></div>
+              <span class="metric-caption">Waktu respons</span>
+            </article>
+            <article class="metric-card">
+              <div class="metric-icon blue">↓</div><p>Download</p>
+              <div class="metric-value"><span id="homeDownload">—</span><small>Mbps</small></div>
+              <span class="metric-caption">Kecepatan menerima data</span>
+            </article>
+            <article class="metric-card">
+              <div class="metric-icon purple">↑</div><p>Upload</p>
+              <div class="metric-value"><span id="homeUpload">—</span><small>Mbps</small></div>
+              <span class="metric-caption">Kecepatan mengirim data</span>
+            </article>
+            <article class="metric-card">
+              <div class="metric-icon green">◎</div><p>IP Publik</p>
+              <div class="metric-value ip-value" id="homeIP">—</div>
+              <span class="metric-caption">Alamat IP dari layanan eksternal</span>
+            </article>
+          </div>
+
+          <div class="two-column">
+            <article class="panel">
+              <div class="panel-heading"><div><h3>Grafik Kecepatan</h3><p>Riwayat sampel download selama tes</p></div><span class="chart-mark">● Mbps</span></div>
+              <canvas id="homeChart" height="220" aria-label="Grafik kecepatan download"></canvas>
+              <p class="chart-note" id="homeChartNote">Belum ada data pengukuran.</p>
+            </article>
+            <article class="panel quick-panel">
+              <div class="panel-heading"><div><h3>Akses Cepat</h3><p>Pilih fitur yang kamu butuhkan</p></div></div>
+              <button class="quick-action" data-go="speed"><span class="quick-icon cyan">⌁</span><span><strong>Tes kecepatan</strong><small>Periksa ping, download, upload</small></span><b>→</b></button>
+              <button class="quick-action" data-go="analysis"><span class="quick-icon purple">▤</span><span><strong>Analisis aplikasi</strong><small>Periksa kebutuhan bandwidth</small></span><b>→</b></button>
+              <button class="quick-action" data-go="troubleshoot"><span class="quick-icon green">⚙</span><span><strong>Solusi jaringan</strong><small>Cari gejala dan penanganan</small></span><b>→</b></button>
+            </article>
+          </div>
+          <p class="disclaimer">Catatan: hasil dipengaruhi perangkat, Wi-Fi, server pengujian, dan kondisi jaringan. NetCheck tidak menggantikan pemeriksaan teknisi.</p>
+        </section>
+
+        <!-- SPEED TEST -->
+        <section class="page" id="page-speed">
+          <div class="page-intro"><span class="tag">SPEED DIAGNOSTIC</span><h2>Uji koneksi internet</h2><p>Pengukuran dilakukan melalui layanan pengujian eksternal. Hasil tidak menggunakan angka acak.</p></div>
+
+          <div class="speed-layout">
+            <article class="panel speed-main">
+              <div class="gauge-wrap">
+                <div class="gauge-ring">
+                  <div class="gauge-inner">
+                    <span class="gauge-label" id="gaugeLabel">DOWNLOAD</span>
+                    <strong id="liveSpeed">—</strong>
+                    <small>Mbps / ms sesuai tahap</small>
+                  </div>
+                </div>
+              </div>
+              <div class="test-status"><span class="online-dot"></span><strong id="testStatus">SIAP DIUJI</strong></div>
+              <p id="testMessage" class="test-message">Tekan tombol di bawah untuk memulai pengukuran.</p>
+              <button class="btn btn-primary btn-large" id="startTest">Mulai Pengujian <span>→</span></button>
+              <p class="tiny-note">Tes membutuhkan internet aktif. Penggunaan data dapat bertambah selama pengujian.</p>
+            </article>
+
+            <div class="speed-side">
+              <div class="metrics-grid speed-metrics">
+                <article class="metric-card"><div class="metric-icon cyan">◷</div><p>Ping</p><div class="metric-value"><span id="speedPing">—</span><small>ms</small></div></article>
+                <article class="metric-card"><div class="metric-icon blue">↓</div><p>Download</p><div class="metric-value"><span id="speedDownload">—</span><small>Mbps</small></div></article>
+                <article class="metric-card"><div class="metric-icon purple">↑</div><p>Upload</p><div class="metric-value"><span id="speedUpload">—</span><small>Mbps</small></div></article>
+                <article class="metric-card"><div class="metric-icon green">◎</div><p>IP Publik</p><div class="metric-value ip-value" id="speedIP">—</div></article>
+              </div>
+              <article class="panel">
+                <div class="panel-heading"><div><h3>Grafik Download</h3><p>Perubahan sampel saat tes berlangsung</p></div></div>
+                <canvas id="speedChart" height="220" aria-label="Grafik tes download"></canvas>
+                <p class="chart-note" id="chartNote">Belum ada data pengukuran.</p>
+              </article>
+            </div>
+          </div>
+          <div class="info-strip"><strong>Tips:</strong> tutup unduhan besar, dekatkan perangkat ke router, dan ulangi tes pada waktu berbeda untuk membandingkan hasil.</div>
+        </section>
+
+        <!-- APP ANALYSIS -->
+        <section class="page" id="page-analysis">
+          <div class="page-intro"><span class="tag">BANDWIDTH CHECK</span><h2>Analisis kebutuhan aplikasi</h2><p>Periksa perkiraan kemampuan aplikasi berdasarkan kecepatan download yang tersedia.</p></div>
+          <article class="panel analyzer-panel">
+            <div><h3>Masukkan kecepatan download</h3><p class="muted">Gunakan hasil tes atau masukkan angka sendiri.</p></div>
+            <form id="analysisForm" class="analyzer-form">
+              <label for="manualSpeed">Kecepatan (Mbps)</label>
+              <div class="input-row"><input id="manualSpeed" type="number" min="0" max="100000" step="0.01" placeholder="Contoh: 20" inputmode="decimal"><button class="btn btn-primary" id="analyzeBtn" type="submit">Analisis</button></div>
+            </form>
+            <p class="analysis-source" id="analysisSource">Belum ada analisis. Jalankan tes atau masukkan kecepatan.</p>
+          </article>
+
+          <div class="section-heading"><div><h2>Aplikasi sehari-hari</h2><p>Media sosial, komunikasi, belajar, dan hiburan</p></div><span class="subtle-chip" id="dailyCount">12 APLIKASI</span></div>
+          <div class="app-grid" id="dailyApps"></div>
+
+          <div class="section-heading section-gap"><div><h2>Game</h2><p>Perkiraan kebutuhan jaringan saat bermain</p></div><span class="subtle-chip" id="gameCount">10 GAME</span></div>
+          <div class="app-grid" id="gameApps"></div>
+          <p class="disclaimer">Penilaian adalah perkiraan, bukan jaminan. Ping, packet loss, kualitas server, update aplikasi, resolusi video, dan jumlah pengguna juga berpengaruh.</p>
+        </section>
+
+        <!-- TROUBLESHOOTING -->
+        <section class="page" id="page-troubleshoot">
+          <div class="page-intro"><span class="tag">NETWORK SUPPORT</span><h2>Solusi masalah jaringan</h2><p>Pilih masalah untuk melihat gejala, langkah penanganan, dan pemeriksaan lanjutan.</p></div>
+          <div class="search-box"><span>⌕</span><input id="troubleSearch" type="search" placeholder="Cari Wi-Fi, DNS, LAN, IP, MikroTik..." aria-label="Cari masalah jaringan"><kbd>SEARCH</kbd></div>
+          <div class="trouble-grid" id="troubleGrid"></div>
+          <div class="info-strip"><strong>Perhatian:</strong> untuk perubahan konfigurasi router, MikroTik, firewall, atau DHCP, mintalah izin administrator dan catat konfigurasi awal.</div>
+        </section>
+
+        <!-- LAST RESULT -->
+        <section class="page" id="page-result">
+          <div class="page-intro"><span class="tag">TEST SUMMARY</span><h2>Hasil pengujian terakhir</h2><p>Ringkasan pengukuran yang berhasil pada sesi browser ini.</p></div>
+          <div id="noResult" class="panel empty-state">
+            <div class="empty-icon">⌁</div><h3>Belum ada hasil tes</h3><p>Mulai tes kecepatan untuk melihat ringkasan, status koneksi, dan saran perbaikan.</p><button class="btn btn-primary" data-go="speed">Mulai Tes <span>→</span></button>
+          </div>
+            <article class="result-banner">
+              <div><span class="tag">KESIMPULAN</span><h2 id="resultGrade">Hasil belum tersedia</h2><p id="resultDescription"></p></div>
+              <div class="result-symbol">✓</div>
+            </article>
+            <div class="metrics-grid result-metrics">
+              <article class="metric-card"><div class="metric-icon cyan">◷</div><p>Ping</p><div class="metric-value"><span id="resultPing">—</span><small>ms</small></div></article>
+              <article class="metric-card"><div class="metric-icon blue">↓</div><p>Download</p><div class="metric-value"><span id="resultDownload">—</span><small>Mbps</small></div></article>
+              <article class="metric-card"><div class="metric-icon purple">↑</div><p>Upload</p><div class="metric-value"><span id="resultUpload">—</span><small>Mbps</small></div></article>
+              <article class="metric-card"><div class="metric-icon green">◎</div><p>IP Publik</p><div class="metric-value ip-value" id="resultIP">—</div></article>
+            </div>
+            <article class="panel tips-panel"><div class="panel-heading"><div><h3>Saran perbaikan</h3><p>Langkah yang bisa kamu coba</p></div></div><ol id="resultTips"></ol></article>
+            <div class="result-actions"><button class="btn btn-primary" data-go="speed">Tes Ulang <span>↻</span></button><button class="btn btn-secondary" id="copyResult">Salin Ringkasan</button></div>
+          </div>
+        </section>
+
+        <footer class="app-footer"><span>NetCheck</span><span>Alat bantu belajar jaringan komputer</span></footer>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
